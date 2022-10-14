@@ -5,6 +5,7 @@ import com.plcoding.weatherapp.data.remote.WeatherDto
 import com.plcoding.weatherapp.domain.weather.WeatherData
 import com.plcoding.weatherapp.domain.weather.WeatherInfo
 import com.plcoding.weatherapp.domain.weather.WeatherType
+import java.time.LocalDateTime
 import java.time.LocalDateTime.*
 import java.time.format.DateTimeFormatter
 
@@ -15,7 +16,7 @@ private data class IndexedWeatherData(
 
 
 fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
-    return times.mapIndexed { index, time ->
+    return time.mapIndexed { index, time ->
         val temperature = temperatures[index]
         val weatherCode = weatherCodes[index]
         val windSpeed = windSpeeds[index]
@@ -24,7 +25,7 @@ fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
         IndexedWeatherData(
             index = index,
             data = WeatherData(
-                time = parse(time, DateTimeFormatter.ISO_DATE_TIME),
+                time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
                 temperatureCelsius = temperature,
                 pressure = pressure,
                 windSpeed = windSpeed,
